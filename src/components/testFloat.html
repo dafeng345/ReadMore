@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* float浮动跟position:absolute一样拥有脱离文档流的功能，
+        但是float虽然脱离了文档流但是仍然会占据位置，其他的文本会按照顺序继续排列
+         */
+        .fl{
+            float: left;
+        }
+        .red{
+            border: 1px solid #f00;
+            width: 100px;
+            height: 100px;
+        }
+        .ab{
+            position: absolute;
+        }
+        .mar10{
+            margin: 10px;
+        }
+        .h0{
+            /* height: 0; */
+            overflow:hidden;
+            zoom:1 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="fl red"></div>
+    <div class="ab red mar10"></div>
+    fgjkfgfkl
+    <div class="h0">
+        <div class="fl red"></div>
+    </div>
+<div class="red mar10"></div>
+</body>
+</html>

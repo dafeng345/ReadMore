@@ -51,7 +51,9 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  /* 可以把 块容器 中的内容限制为指定的行数2. */
   -webkit-line-clamp: 2;
+  /* 从顶部向底部垂直布置子元素 */
   -webkit-box-orient: vertical;
 }
 

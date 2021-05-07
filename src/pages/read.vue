@@ -92,6 +92,7 @@ export default {
 			}
 		}
 		this.fetchChapters(this.bookId);
+		debugger
 		if(this.$route.query.menu) {
 			this.isFromMenu = true;
 			this.isShowChapters = true;

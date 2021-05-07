@@ -1,19 +1,29 @@
 <template>
 	<div class="featured">
+		<!-- 头部 -->
 		<header-bar :sex="sex" v-on:change-sex="changeSex"></header-bar>
 		<div class="featured-book-list" ref="featuredBookList">
 			<swiper></swiper>
-			<section class="book-list-section" v-for="module in modules" v-if="module.type === 0" :key="module._id">
-				<div class="book-list-top">
-					<h2 class="book-list-title">{{ module.title }}</h2>
-					<div class="book-list-more fr">
-						<router-link :to="{ name: 'list', params: {id : module._id} }" class="red">更多</router-link>
-					</div>
-				</div>
-				<home-list :book-info="{ id: module._id }" @load-result="loadResult"></home-list>
-			</section>
+			<div  v-for="module in modules" :key="module._id">
+				<!-- <keep-alive> -->
+					<section class="book-list-section" v-if="module.type === 0">
+						<!-- 列表头部 -->
+						<div class="book-list-top">
+							<h2 class="book-list-title">{{ module.title }}</h2>
+							<div class="book-list-more fr">
+								<router-link :to="{ name: 'list', params: {id : module._id} }" class="red">更多</router-link>
+							</div>
+						</div>
+						<!-- 列表中的每一项专栏 -->
+						<!-- @load-result 子传父 book-info:父传子-->
+						<home-list :book-info="{ id: module._id }" @load-result="loadResult"></home-list>
+					</section>
+				<!-- </keep-alive> -->
+			</div>
+			
 		</div>
 		<tabbar></tabbar>
+		<!-- 遮罩层,无数据时展示动图 -->
 		<page-loading v-if="isShowPageLoading"></page-loading>
 	</div>
 </template>
@@ -47,12 +57,14 @@ export default {
 	},
 	watch: {
 		loadModules: function () {
+			// 当专栏id组成的数组为[]时,删除遮罩
 			if(this.loadModules.length === 0) {
 				this.isShowPageLoading = false;
 			}
 		}
 	},
 	created: function () {
+		// 页面类型FEATURED
 		this.SET_HEADER_INFO({
 			title: 'RM',
 			type: FEATURED_PAGE
@@ -70,15 +82,19 @@ export default {
 					 * 通过开发工具获取到的接口，无排序和男/女分类，其他地方也没找到相关的接口，
 					 * 所以此处只好获取数据之后再进一步处理。此处的数据处理非重点内容。
 					 */
+					// debugger
 					data = Array.from(data).sort((a, b) => {
 						return a.order - b.order;
 					});
 					let sexOrder = this.sex === 'male' ? [2, 5, 7, 9] : [1, 4, 6, 8];
+					// 女生时返回过滤obj.type === 0
 					data = data.filter((obj) => {
 						return sexOrder.includes(obj.order) && obj.type === 0;
 					});
 					this.modules = data;
+					// 获得[_id,_id]组成的数组
 					this.loadModules = Array.from(data, value => value._id);
+					// console.log(this.modules,this.loadModules)
 				});
 		},
 		changeSex: function (sex) {
@@ -88,6 +104,8 @@ export default {
 			this.fetchData();
 		},
 		loadResult: function (id) {
+			// debugger
+			// 子传父,当一个专栏加载完成之后,将该专栏的_id删除.
 			this.loadModules.splice(this.loadModules.indexOf(id), 1);
 		}
 	}

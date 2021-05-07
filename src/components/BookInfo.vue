@@ -16,12 +16,14 @@
 		<p class="reader-item"><span class="title">读者留存率</span><span class="content">{{ book.retentionRatio }}%</span></p>
 		<p class="reader-item"><span class="title">日更新字数/天</span><span class="content">{{ serializeWordCount }}</span></p>
 	</div>
+    <!-- 介绍 -->
 	<div class="book-intro" @click="spreadIntro" :class="{ part: isPart }">
 		<p class="long-intro">{{ book.longIntro }}</p>
 		<svg class="icon" aria-hidden="true" v-show="isPart">
 			<use xlink:href="#icon-back"></use>
 		</svg>
 	</div>
+    <!-- 目录 -->
 	<div class="book-menu">
 		<router-link :to="{ name: 'read', params: { id: book._id }, query: { menu: true } }">
 			<div class="menu-title fl">目录</div>
@@ -128,6 +130,7 @@ export default {
 
         .book-title {
             color: #333;
+            // 此数字会与当前的字体尺寸相乘来设置行间距
             line-height: 1;
             margin: 3px 0 5px;
             font-weight: 500;

@@ -1,10 +1,15 @@
 <template>
 <div class="book">
 	<backbar :title="title"></backbar>
+	<!-- 书籍详情 -->
 	<book-info @load-result="loadResult"></book-info>
+	<!-- 书评 -->
 	<review></review>
+	<!-- 同门推荐 -->
 	<recommend></recommend>
+	<!-- 底部栏:加入书架/立即阅读 -->
 	<bookbar></bookbar>
+	<!-- 遮罩层,无数据时展示动图 -->
 	<page-loading v-if="isShowPageLoading"></page-loading>
 </div>
 </template>
@@ -45,6 +50,7 @@ export default {
         ])
     },
 	created() {
+		// 
 		this.SET_HEADER_INFO({
 			title: '同类推荐',
 			type: BOOK_PAGE

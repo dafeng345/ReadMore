@@ -1,5 +1,6 @@
 <template>
 <header class="header">
+	<!-- 头部左右两边脱离文档流,中间设置display:table; -->
 	<h2 class="header-logo">{{ headerTitle }}</h2>
 	<nav class="nav-group" v-if="isShow">
 		<h3 :class="['nav-item', { active: sexType === 'male' }]" @click="changSex('male')">男生</h3>
@@ -7,6 +8,7 @@
 	</nav>
 	<div class="header-search">
 		<router-link :to="{ name: 'search' }">
+			<!--  svg这个独立片段拥有独立的视口和坐标系统 ,aria-hidden:true让这个元素对浏览器隐藏-->
 			<svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-search"></use>
                 </svg>

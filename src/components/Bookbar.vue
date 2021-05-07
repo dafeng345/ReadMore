@@ -1,5 +1,6 @@
 <template>
 <section class="book-bar">
+	<!-- 1.1 -->
 	<div class="book-bar-item" v-show="!isAdded" @click="addToShelf">
 		<div class="book-bar-icon">
 			<svg class="icon" aria-hidden="true">
@@ -8,6 +9,7 @@
 		</div>
 		<p class="book-bar-content">加入书架</p>
 	</div>
+	<!-- 1.2 -->
 	<div class="book-bar-item" v-show="isAdded">
 		<div class="book-bar-icon">
 			<svg class="icon" aria-hidden="true">
@@ -16,6 +18,7 @@
 		</div>
 		<p class="book-bar-content">已加入书架</p>
 	</div>
+	<!-- 2 -->
 	<div class="book-bar-item read">
 		<router-link :to="{ name: 'read', params: { id: curBook.id }}">
 			<p class="book-bar-content">立即阅读</p>
@@ -64,7 +67,8 @@ export default {
 
 <style lang="scss">
 .book-bar {
-    position: fixed;
+	position: fixed;
+	// 宽度100%
     left: 0;
     right: 0;
     bottom: 0;

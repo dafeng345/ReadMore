@@ -1,17 +1,20 @@
 <template>
 <section class="book-home-list">
 	<ol class="book-list-content">
+        <!-- 精选首页中,对每个专栏进行遍历 -->
 		<li class="book-list-li" v-for="book in bookList" :key="book._id">
+            <!-- 默认生成a链接 -->
 			<router-link :to="{ name: 'book', params: {id: book._id} }">
 				<img class="book-list-book-cover fl" :src="book.cover">
 				<div class="book-list-book-info">
 					<h3 class="book-title">{{ book.title }}</h3>
-					<p class="book-summary text-line-comm gray">{{ book.shortIntro }}</p>
+					<p class="book-summary text-line-comm gray" :style="{'webkitBoxOrient': 'vertical'}">{{ book.shortIntro }}</p>
 					<p class="book-info">
 						<span class="book-author fl gray">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-author"></use>
                             </svg>{{ book.author }}
+                            <!-- <em class="icon">{{ book.author }}</em> -->
                         </span>
 						<span class="book-tags fr">
                             <em class="small-tag gray">{{ book.majorCate }}</em>
@@ -39,7 +42,8 @@ export default {
 		return {
 			bookList: []
 		}
-	},
+    },
+    // 使用watch监听拿到props的传值
 	watch: {
 		'bookInfo': 'fetchData'
 	},
@@ -47,17 +51,22 @@ export default {
 		this.fetchData();
 	},
 	methods: {
-		fetchData: function() {
+		fetchData: function(newVal) {
+            // console.log(newVal,arguments);
+            
 			api.getBooks(this.bookInfo.id)
 				.then(data => {
+                    // debugger
 					data = data.map(value => {
 						return value.book;
 					});
 					return data;
 				})
 				.then(data => {
+                    // 循环第二层
 					this.bookList = data;
 					this.$nextTick(function () {
+                        // 传递每一个专栏的id,而不是每本书的id.
                     	this.$emit('load-result', this.bookInfo.id);
 					})
 				})

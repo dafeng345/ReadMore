@@ -20,6 +20,7 @@ import {
 } from '../util/util';
 
 export default {
+	// App.vue中运行时初始化
 	[INIT_STATE](state) {
 		let initBookList = getStore('SHEFLBOOK');
 		if (initBookList) {
@@ -27,14 +28,16 @@ export default {
 		}
 		let initSearchHistory = getStore('SEARCHHISTORY');
 		if (initSearchHistory) {
+			// 获取搜索历史
 			state.searchHistory = JSON.parse(initSearchHistory);
 		}
 
 		state.nightMode = getStore('NIGHTMODE') === 'true' ? true : false;
+		// 设置字体大小
 		state.fontSize = Number.isInteger(getStore('FONTSIZE')) ? parseInt(getStore('FONTSIZE')) : 14;
 		state.skinColor = getStore('SKINCOLOR');
 	},
-
+	// 设置标题与页面类型
 	[SET_HEADER_INFO](state, {
 		title,
 		type
